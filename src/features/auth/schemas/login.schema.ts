@@ -5,4 +5,3 @@ export const loginSchema = z
     username: z.string("Invalid username").nonempty("Username is required"),
     password: z.string("Invalid password").nonempty("Password is required"),
   })
-  .strict();

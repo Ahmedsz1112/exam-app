@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { LoginFields } from "../../types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -86,7 +85,9 @@ export default function LoginForm() {
       </Link>
 
       {/* error message */}
-      {error?.message && <p className="text-sm text-red-500 font-medium">{error?.message}</p>}
+      {error?.message && (
+        <p className="text-sm text-red-500 font-medium">{error?.message}</p>
+      )}
 
       {/* submit button */}
       <Button
