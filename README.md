@@ -58,7 +58,7 @@ API=
 AUTH_SECRET=
 ```
 
-`.env.local` is ignored by git — never commit real values.
+`.env.local` is ignored by git. Never commit real values.
 
 ## Project Structure
 
