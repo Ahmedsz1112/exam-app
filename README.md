@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Exam & Diploma Platform
+
+A Next.js App Router application for browsing diplomas and managing an account,
+built with TypeScript, authenticated sessions and a cached query layer.
+
+## Overview
+
+The app is organised by feature rather than by file type. Each feature owns its
+API calls, components, hooks, validation schemas and types, so a change to
+"diplomas" stays inside `src/features/diploma` instead of spreading across the
+tree. Shared UI primitives and providers live under `src/shared`.
+
+Authentication runs through NextAuth with a credentials provider; the session
+token is attached to outgoing API requests. Diploma listings are fetched through
+TanStack Query and paged with infinite scroll.
+
+## Features
+
+- Credentials login with NextAuth, typed session and JWT callbacks
+- Route groups separating the auth screens from the authenticated dashboard
+- Diploma listing with infinite scroll over a paginated API
+- Account page with a profile form validated on the client
+- Server-only fetch boundaries so API calls never leak into the client bundle
+- Accessible form primitives built on shadcn/ui and Tailwind CSS
+
+## Tech Stack
+
+| Layer | Technology |
+| --- | --- |
+| Framework | Next.js (App Router) |
+| Language | TypeScript |
+| Auth | NextAuth |
+| Data fetching | TanStack Query, Axios |
+| Forms | React Hook Form |
+| UI | shadcn/ui, Tailwind CSS, Lucide icons |
+| Pagination | react-infinite-scroll-component |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+git clone https://github.com/Ahmedsz1112/exam-app.git
+cd exam-app
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app runs at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the project root:
 
-## Learn More
+```bash
+# Base URL of the backend REST API
+API=
 
-To learn more about Next.js, take a look at the following resources:
+# Secret used by NextAuth to sign session tokens
+AUTH_SECRET=
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`.env.local` is ignored by git — never commit real values.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+  app/
+    (auth)/login/           # Login screen
+    (dashboard)/            # Authenticated area
+      (diplomas)/           # Diploma listing
+      account/              # Profile management
+    api/
+      auth/[...nextauth]/   # NextAuth route handler
+      diplomas/             # Diploma API route
+  auth.ts                   # NextAuth configuration
+  features/
+    auth/                   # APIs, components, hooks, schemas, types
+    diploma/
+    user/
+  shared/
+    components/ui/          # shadcn/ui primitives
+    context/global/         # NextAuth and React Query providers
+    constants/  lib/  types/
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev      # Start the development server
+npm run build    # Production build
+npm run start    # Serve the production build
+npm run lint     # Lint the project
+```
